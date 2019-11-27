@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import ua.training.controller.command.*;
 import ua.training.controller.command.Exception;
 import ua.training.model.service.CommentService;
+import ua.training.model.service.ProductService;
 import ua.training.model.service.RequestService;
 import ua.training.model.service.UserService;
 
@@ -26,9 +27,11 @@ public class Servlet extends HttpServlet {
         UserService userService = new UserService();
         RequestService requestService=new RequestService();
         CommentService commentService=new CommentService();
+        ProductService productService=new ProductService();
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
+        commands.put("", new ShowBoxes(productService));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(userService));
         commands.put("registration", new Registration(userService));

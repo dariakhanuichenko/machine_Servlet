@@ -1,9 +1,6 @@
 package ua.training.model.dao.impl;
 
-import ua.training.model.dao.CommentDao;
-import ua.training.model.dao.DaoFactory;
-import ua.training.model.dao.RequestDao;
-import ua.training.model.dao.UserDao;
+import ua.training.model.dao.*;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -26,6 +23,31 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public CommentDao createCommentDao() {
         return new JDBCCommentDao(getConnection(), createUserDao());
+    }
+
+    @Override
+    public BoxDao createBoxDao() {
+        return new JDBCBoxDao(getConnection());
+    }
+
+    @Override
+    public JDBCOrderDao createOrderDao() {
+        return new JDBCOrderDao(getConnection());
+    }
+
+    @Override
+    public ProductDao createProductDao() {
+        return new JDBCProductDao(getConnection());
+    }
+
+    @Override
+    public ProductOrderDao createProductOrderDao() {
+        return new JDBCProductOrderDao(getConnection());
+    }
+
+    @Override
+    public RevenueDao createRevenueDao() {
+        return new JDBCRevenueDao(getConnection());
     }
 
     private Connection getConnection(){

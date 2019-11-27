@@ -15,7 +15,7 @@ public class ConnectionPoolHolder {
                     BasicDataSource ds = new BasicDataSource();
                     ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-                    ds.setUrl("jdbc:mysql://localhost:1433/reg_form?useTimezone=true&serverTimezone= Europe/Kiev");
+                    ds.setUrl("jdbc:mysql://localhost:3306/machine?useTimezone=true&serverTimezone= Europe/Kiev");
                     ds.setUsername("root");
                     ds.setPassword("11111");
                     ds.setMinIdle(5);

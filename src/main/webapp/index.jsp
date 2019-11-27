@@ -22,23 +22,27 @@
 <body>
 <div>
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-        <div class="container"><a class="navbar-brand" href="#"><span style="color: red; font-size:20pt; font-family: 'Arial Black'">My</span> machine</a>
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+        <div class="container"><a class="navbar-brand" href="#"><span
+                style="color: red; font-size:20pt; font-family: 'Arial Black'">My</span> machine</a>
+
+            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
                     class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                  id="navcol-1">
-                <span class="navbar-text actions"> <a href="/user" class="login" ><fmt:message key="message.login"/></a>
-                    <a class="btn btn-light action-button" role="button" href="/reg"
-                       style="background-color: #FF3C40;"><fmt:message key="message.registration"/></a>
+
+                <span class="navbar-text actions"> <a href="${pageContext.request.contextPath}/app/login" class="login">
+                    <fmt:message
+                        key="message.login"/></a>
+                    <a class="btn btn-light action-button" role="button"
+                       href="${pageContext.request.contextPath}/app/registration"
+                       style="background-color: #FF3C40;"> <fmt:message key="message.registration"/></a></a>
                 </span>
-                <button class="btn" type="button"
-                        value="uk"
-                        id="locales2"
-                        style="height: 20px;background-image: url(&quot;/assets/img/ua.jpg&quot;);background-position: center;margin-right: 2px;margin-left: 15px;"></button>
-                <button
-                        value="en"
-                        class="btn" type="button" id="locales"
-                        id="but"></button>
+                <a class="btn" id="locales"
+                   href="?sessionLocale=en"><img src="static/United-Kingdom-flag-icon.png" height="30px"/></a>
+                <a class="btn"
+                   href="?sessionLocale=ua"><img src="static/Ukraine-Flag-icon.png" height="30px"/> </a>
+
+
             </div>
         </div>
     </nav>
@@ -49,18 +53,26 @@
 <div id="line"></div>
 <div style="margin-left:40%; margin-right: 15%; margin-top: 2%" class="row">
     <div class="col">
-        <div class="table-responsive" >
+        <div class="table-responsive">
             <table class="table table-borderless">
+<thead>
+                <tr>
+                    <th> product name</th>
+                    <th> price</th>
 
-                <div th:each="product: ${products}">
+                </tr>
+</thead>
+                <tbody>
+                <c:forEach items="${products}" var="product">
+                    <%--                <div th:each="product: ${products}">--%>
                     <tr>
-                        <td style="width: 70px; valign:middle;" >Product name</td>
+                        <td style="width: 70px; valign:middle;"><c:out value="${product.name}"/></td>
 
-                        <td style="width: 30px; valign:middle;" >Price</td>
-                        <td style="width: 30px;" >
+                        <td style="width: 30px; valign:middle;"><c:out value="${product.price}"/></td>
+                        <td style="width: 30px;">
                             <a id="buttonBuy" th:href="@{/local/buy-product?(id=${product.id})}" type="submit"
                                th:style="${product.currentLoad == 0 ? 'pointer-events: none;' : 'pointer-events: auto;'}">
-                                <span th:text="#{buy}"></span>
+                                Buy
                             </a>
                         </td>
                         <td>
@@ -68,14 +80,16 @@
                                     class="button button5"></button>
                         </td>
                     </tr>
-                </div>
+                </c:forEach>
+                </tbody>
             </table>
         </div>
     </div>
 
 </div>
-<div th:style="${error == false ? 'visibility:hidden;' : 'visibility:visible;'}" class="alert alert-danger" role="alert">
-    <span th:text="#{put.enough.money}"></span>
+<div th:style="${error == false ? 'visibility:hidden;' : 'visibility:visible;'}" class="alert alert-danger"
+     role="alert">
+    Put enought money
 </div>
 
 <div style="margin-left: 35%">
@@ -83,17 +97,19 @@
           method="post">
         <span>Put</span>
         <span>Payment</span>
-        <span >money</span>
-        <input name="money"  pattern="[0-9]+">
+        <span>money</span>
+        <input name="money" pattern="[0-9]+">
         <button id="buttonPay" type="submit">
             <span>Pay</span></button>
-        <a id="buttonCansel" href="/local/cancel"  onclick="makeCanceled()" type="submit">
+        <a id="buttonCansel" href="/local/cancel" onclick="makeCanceled()" type="submit">
             <span>Cancel</span>
         </a>
     </form>
 </div>
 <div id="cancel" style="display:none;" class="alert alert-primary" role="alert">
-    <span th:text="#{returned}"></span> <span th:text="${return}"></span> <span th:text="#{money}"></span>
+    Returned
+    <%--    <span th:text="${return}"></span> --%>
+    money
 </div>
 
 <script>

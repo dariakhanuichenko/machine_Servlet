@@ -30,9 +30,24 @@ public class Box {
     private Integer currentLoad;
     private Integer totalCapasity;
 
-    private Product product;
+    private Long productId;
 
     public Box() {
+    }
+
+    public Box(Long id, Integer currentLoad, Integer totalCapasity, Long productId) {
+        this.id = id;
+        this.currentLoad = currentLoad;
+        this.totalCapasity = totalCapasity;
+        this.productId = productId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Long getId() {
@@ -59,18 +74,6 @@ public class Box {
         this.totalCapasity = totalCapasity;
     }
 
-    public Product getProduct() {
-        return product;
-    }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
-    public Box(Long id, Integer currentLoad, Integer totalCapasity, Product product) {
-        this.id = id;
-        this.currentLoad = currentLoad;
-        this.totalCapasity = totalCapasity;
-        this.product = product;
-    }
 }
