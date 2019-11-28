@@ -10,10 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCProductDao implements ProductDao {
 
     private String queryFindAllWithCurrentLoad = "select p.id, p.name, p.price, b.current_load from product p inner join box b on p.id=b.product_id;";
+    private String queryFindById = "select * from product where id=?";
     private Connection connection;
 
     public JDBCProductDao(Connection connection) {
@@ -34,6 +36,21 @@ public class JDBCProductDao implements ProductDao {
             throw new RuntimeException(e);
         }
         return resultList;
+    }
+
+    @Override
+    public Optional<Product> findById(Long id) {
+        try (PreparedStatement ps = connection.prepareStatement
+                (queryFindById)) {
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Optional.of(extractFromResultSetToProduct(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -70,11 +87,20 @@ public class JDBCProductDao implements ProductDao {
     public long findCount() {
         return 0;
     }
+
     private ProductDTO extractFromResultSetToProductDTO(ResultSet rs)
             throws SQLException {
         return new ProductDTO(rs.getLong("id"),
-               rs.getString("name"),
+                rs.getString("name"),
                 rs.getLong("price"),
                 rs.getInt("current_load"));
+    }
+
+    private Product extractFromResultSetToProduct(ResultSet rs)
+            throws SQLException {
+        return new Product(rs.getLong("id"),
+                rs.getString("name"),
+                rs.getLong("price")
+        );
     }
 }

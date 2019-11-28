@@ -48,13 +48,13 @@ public class Login implements Command {
 
         if (user.get().getRole().equals(Role.ROLE_MASTER)) {
             CommandUtility.setUserRole(request, Role.ROLE_MASTER, email);
-            return "redirect:/api/app/master/accepted_requests";
+            return "redirect:/app/master/accepted_requests";
         } else if (user.get().getRole().equals(Role.ROLE_USER)) {
             CommandUtility.setUserRole(request, Role.ROLE_USER, email);
-            return "redirect:/api/app/user/create_request";
+            return "redirect:/app/user/create_request";
         } else if (user.get().getRole().equals(Role.ROLE_MANAGER)) {
             CommandUtility.setUserRole(request, Role.ROLE_MANAGER, email);
-            return "redirect:/api/app/manager/new_requests";
+            return "redirect:/app/manager/new_requests";
         }else {
             return "redirect:/index.jsp";
         }

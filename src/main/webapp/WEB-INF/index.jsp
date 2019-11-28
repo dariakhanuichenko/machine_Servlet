@@ -1,4 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -19,6 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="static/styles2.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 <div>
@@ -65,13 +65,14 @@
 </thead>
                 <tbody>
                 <c:forEach items="${products}" var="product">
+                    <%--                <div th:each="product: ${products}">--%>
                     <tr>
                         <td style="width: 70px; valign:middle;"><c:out value="${product.name}"/></td>
 
                         <td style="width: 30px; valign:middle;"><c:out value="${product.price}"/></td>
                         <td style="width: 30px;">
-                            <a id="buttonBuy" href="/app/local/buy-product?id=${product.id}" type="submit"
-                               style="${product.currentLoad == 0 ? 'pointer-events: none;' : 'pointer-events: auto;'}">
+                            <a id="buttonBuy" th:href="@{/local/buy-product?(id=${product.id})}" type="submit"
+                               th:style="${product.currentLoad == 0 ? 'pointer-events: none;' : 'pointer-events: auto;'}">
                                 Buy
                             </a>
                         </td>

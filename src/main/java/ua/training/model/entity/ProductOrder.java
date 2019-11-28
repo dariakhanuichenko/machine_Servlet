@@ -21,8 +21,8 @@ package ua.training.model.entity;
 //)
 public class ProductOrder {
 
-    Product product;
-    Order order;
+    Long productId;
+    String orderId;
     int number;
 
     // standard constructors, getters, and setters
@@ -30,26 +30,26 @@ public class ProductOrder {
     public ProductOrder() {
     }
 
-    public ProductOrder(Product product, Order order, int number) {
-        this.product = product;
-        this.order = order;
+    public ProductOrder(Long productId, String orderId, int number) {
+        this.productId = productId;
+        this.orderId = orderId;
         this.number = number;
     }
 
-    public Product getProduct() {
-        return product;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
-    public Order getOrder() {
-        return order;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public int getNumber() {

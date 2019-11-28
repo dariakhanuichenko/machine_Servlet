@@ -4,10 +4,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ua.training.controller.command.*;
 import ua.training.controller.command.Exception;
-import ua.training.model.service.CommentService;
-import ua.training.model.service.ProductService;
-import ua.training.model.service.RequestService;
-import ua.training.model.service.UserService;
+import ua.training.model.entity.ProductOrder;
+import ua.training.model.service.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -28,10 +26,14 @@ public class Servlet extends HttpServlet {
         RequestService requestService=new RequestService();
         CommentService commentService=new CommentService();
         ProductService productService=new ProductService();
+        ProductOrderService productOrderService=new ProductOrderService();
+        BoxService boxService= new BoxService();
+        OrderService orderService= new OrderService();
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
         commands.put("", new ShowBoxes(productService));
+        commands.put("local/buy-product", new BuyProduct(productService,boxService, productOrderService, orderService));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(userService));
         commands.put("registration", new Registration(userService));
@@ -76,7 +78,7 @@ public class Servlet extends HttpServlet {
         path = path.replaceAll(".*/app/", "");
         logger.info(path);
         Command command = commands.getOrDefault(path,
-                (r) -> "/index.jsp)");
+                (r) -> "/app/");
         String page = command.execute(request);
         if (page.contains("redirect")) {
             response.sendRedirect(page.replace("redirect:", ""));

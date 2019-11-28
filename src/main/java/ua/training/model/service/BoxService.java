@@ -5,6 +5,7 @@ import ua.training.model.dao.DaoFactory;
 import ua.training.model.entity.Box;
 
 import java.util.List;
+import java.util.Optional;
 
 public class BoxService {
 
@@ -17,4 +18,10 @@ public class BoxService {
     }
 
     public List<Box> findAll(){return boxDao.findAll(1,1);}
+
+    public Optional<Box> findByProduct(Long id){return boxDao.findByProduct(id);}
+
+    public void updateCurrentLoadById(Integer currentLoad, Long id){
+        boxDao.updateSetCurrentLoad(currentLoad, id);
+    }
 }

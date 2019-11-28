@@ -15,8 +15,7 @@ public class ShowBoxes implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         try {
-
-            productService.findAllWithCurrentLoad().forEach(com->request.setAttribute("products",com));
+            request.setAttribute("products",productService.findAllWithCurrentLoad());
 
         } catch ( java.lang.Exception e) {
             e.printStackTrace();

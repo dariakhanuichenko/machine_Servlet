@@ -8,16 +8,15 @@ public class Product {
 
     private String name;
     private Long price;
-    private ProductOrder order;
+
 
     public Product() {
     }
 
-    public Product(Long id, String name, Long price, ProductOrder order) {
+    public Product(Long id, String name, Long price) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.order = order;
     }
 
     public Long getId() {
@@ -44,11 +43,4 @@ public class Product {
         this.price = price;
     }
 
-    public ProductOrder getOrder() {
-        return order;
-    }
-
-    public void setOrder(ProductOrder order) {
-        this.order = order;
-    }
 }
