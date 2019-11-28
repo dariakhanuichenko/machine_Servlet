@@ -96,7 +96,7 @@
     <form th:action="@{/local/pay}"
           method="post">
         <span>Put</span>
-        <span>Payment</span>
+<%--        <span><c:out value="${payment}"/></span>--%>
         <span>money</span>
         <input name="money" pattern="[0-9]+">
         <button id="buttonPay" type="submit">

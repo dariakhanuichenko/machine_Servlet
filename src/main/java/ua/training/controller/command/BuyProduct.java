@@ -53,6 +53,8 @@ public class BuyProduct implements Command {
             }
             log.info( "end func");
         }
+
+
         return "redirect:/app/?error=false";
     }
 

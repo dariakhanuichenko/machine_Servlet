@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import ua.training.controller.command.*;
 import ua.training.controller.command.Exception;
 import ua.training.model.entity.ProductOrder;
+import ua.training.model.entity.Revenue;
 import ua.training.model.service.*;
 
 import javax.servlet.ServletConfig;
@@ -29,10 +30,11 @@ public class Servlet extends HttpServlet {
         ProductOrderService productOrderService=new ProductOrderService();
         BoxService boxService= new BoxService();
         OrderService orderService= new OrderService();
+        RevenueService revenueService= new RevenueService();
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
-        commands.put("", new ShowBoxes(productService));
+        commands.put("", new ShowBoxes(productService, revenueService));
         commands.put("local/buy-product", new BuyProduct(productService,boxService, productOrderService, orderService));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(userService));
