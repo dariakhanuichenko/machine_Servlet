@@ -44,9 +44,9 @@ public class JDBCUserDao implements UserDao {
                 connection.commit();
             }
         }
-//        catch (SQLException e) {
-//            throw new RuntimeException("Invalid input");
-//        }
+        catch (SQLException e) {
+            throw new RuntimeException("Invalid input");
+        }
     }
 
     @Override

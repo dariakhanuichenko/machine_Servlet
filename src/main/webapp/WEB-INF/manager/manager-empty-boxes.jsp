@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml"
->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+<html lang="${sessionScope.lang}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <title>Manager</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
@@ -20,15 +31,14 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse">
 
-            <span class="navbar-text actions"> <a class="login" th:href="@{/logout}" th:text="#{nav.logout}"></a></span>
-            <button class="btn" type="button"
-                    value="uk"
-                    id="locales2"
-                    style="height: 20px;background-image: url(&quot;/assets/img/ua.jpg&quot;);background-position: center;margin-right: 2px;margin-left: 15px;"></button>
-            <button
-                    value="en"
-                    class="btn" type="button" id="locales"
-                    style="height: 20px;background-image: url(&quot;/assets/img/en.jpg&quot;);background-position: center;background-size: cover;background-repeat: no-repeat;padding-right: 12px;margin: 6px;margin-top: 6px;margin-right: -27px;margin-left: 1px;"></button>
+         <span class="navbar-text actions"> <a class="login" href="${pageContext.request.contextPath}/app/logout" >
+                 <fmt:message key="message.logout"/>
+            </a></span>
+            <a class="btn" id="locales"
+               href="?sessionLocale=en"><img src="${pageContext.request.contextPath}/static/United-Kingdom-flag-icon.png" height="30px"/></a>
+            <a class="btn"
+               href="?sessionLocale=ua"><img src="${pageContext.request.contextPath}/static/Ukraine-Flag-icon.png" height="30px"/> </a>
+
         </div>
     </div>
 </nav>
@@ -37,16 +47,16 @@
 <!--     style="height: 500px;background-image: url(&quot;/assets/img/background.png&quot;);background-position: center;background-size: cover;"></div>-->
 
 <div id="line"></div>
-<div th:if="${param.error}">
-    <div class="alert alert-danger" th:text="#{empty.value}">
-        <h2 name="${error}" th:text="#{empty.value}"></h2>
-    </div>
-    <div th:if="${param.logout}">
-        <div class="alert alert-info">
-        </div>
-    </div>
-    <h2 th:if="${error}" th:text="${error}"></h2>
-</div>
+<%--<div th:if="${param.error}">--%>
+<%--    <div class="alert alert-danger" th:text="#{empty.value}">--%>
+<%--        <h2 name="${error}" th:text="#{empty.value}"></h2>--%>
+<%--    </div>--%>
+<%--    <div th:if="${param.logout}">--%>
+<%--        <div class="alert alert-info">--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--    <h2 th:if="${error}" th:text="${error}"></h2>--%>
+<%--</div>--%>
 
 <div style="margin-left:20%; margin-right: 15%; margin-top: 2%" class="row">
     <div class="col">
@@ -60,23 +70,26 @@
                 </thead>
                 <tbody>
 
-                <div th:each="box: ${boxes}">
+                <div >
+                    <c:forEach items="${boxes}" var="box">
                     <tr>
-                        <td th:text="${box.name}"></td>
-                        <td th:text="${box.totalCapasity}"></td>
+                        <td><c:out value="${box.name}"/></td>
+                        <td><c:out value="${box.totalCapasity}"/></td>
 
                         <td>
-                            <form th:action="@{/manager/add-product?(id=${box.id})}"
-                                  method="post" th:object="${boxDTO}">
+                            <form  action="/app/manager/add-product"
+                                  method="post">
                                 <input
-                                        th:field="*{quantity}"
+                                        name="quantity"
                                         pattern="[0-9]+">
-                                <input th:value="${box.id}" th:field="*{id}" type="hidden"/>
-                                <button type="submit" id="buttonCansel"><span th:text="#{add}"></span></button>
+                                <input value="${box.id}" name="id" type="hidden"/>
+
+                                <button type="submit" id="buttonCansel"><span>Add</span></button>
                             </form>
 
                         </td>
                     </tr>
+                    </c:forEach>
                 </div>
 
 
@@ -85,22 +98,24 @@
         </div>
     </div>
     <div>
-        <a id="buttonBuy" href="/manager/get-revenue" onclick="getRevenue()" type="submit"><span
-                th:text="#{get.revenue}"></span></a>
+        <a id="buttonBuy" href="/manager/get-revenue" onclick="getRevenue()" type="submit">
+            <span>Get revenue</span></a>
     </div>
 </div>
 
 <div id="return" style="display:none;" class="alert alert-primary" role="alert">
-    <span th:text="#{returned}"></span> <span th:text="${returnMoney}"></span> <span th:text="#{money}"></span>
+    <span >Returnes</span>
+<%--    <span th:text="${returnMoney}"></span>--%>
+    <span>Money</span>
 </div>
 <script>
     function getRevenue() {
         document.getElementById("return").style.display = "block";
     }
 </script>
-<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="/assets/js/script.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/script.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#locales").click(function () {

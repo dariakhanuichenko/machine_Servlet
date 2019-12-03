@@ -13,7 +13,7 @@ import java.util.Optional;
 public class JDBCRevenueDao implements RevenueDao {
 
 
-    private String queryFindByOrderId="SELECT sum(pr.number *p.price) as summ FROM Product_Order pr join Product p on pr.product_id=p.id WHERE pr.order_id = ?";
+    private String queryFindByOrderId="SELECT sum(number_ *price) as summ FROM Product_Order  join Product  on Product_Order.product_id=Product.id WHERE Product_Order.order_id = ?";
     private Connection connection;
 
     public JDBCRevenueDao(Connection connection) {
@@ -27,7 +27,7 @@ public class JDBCRevenueDao implements RevenueDao {
             ps.setString(1, orderId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return Optional.of(rs.getLong("summ"));
+                return Optional.ofNullable(rs.getLong(1));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

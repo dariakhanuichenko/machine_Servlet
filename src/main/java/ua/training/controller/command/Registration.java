@@ -45,6 +45,7 @@ public class Registration implements Command {
             if (role.equals("ROLE_MANAGER"))
                 userRole = Role.ROLE_MANAGER.name();
 
+            System.out.println("role number " + Role.valueOf(userRole));
             userService.addUser(
                     UserDTO.builder().email(email)
                     .name(name)

@@ -1,6 +1,7 @@
 package ua.training.model.dao.impl;
 
 import ua.training.model.dao.BoxDao;
+import ua.training.model.dto.BoxWithProductNameDTO;
 import ua.training.model.entity.Box;
 
 import java.sql.Connection;
@@ -13,10 +14,12 @@ import java.util.Optional;
 
 public class JDBCBoxDao implements BoxDao {
 
+    private String queryFindById = "select * from box where id=?";
     private String queryFindAll = "select * from box";
     private String queryFindByProduct = "select * from box where product_id=?";
-    private String updateSetCurrentLoad="update box set current_load=? where id=?";
-
+    private String updateSetCurrentLoad = "update box set current_load=? where id=?";
+    private String queryFindByCurrentLoad = "SELECT Product.name, Box.id, Box.total_capasity  FROM Box  inner join Product  on Product.id= Box.product_id WHERE Box.current_load=? ";
+    private String queryUpdateBoxSetCurrentLoad = "update Box  set current_load =? where  id=?";
     private Connection connection;
 
     JDBCBoxDao(Connection connection) {
@@ -26,6 +29,35 @@ public class JDBCBoxDao implements BoxDao {
     @Override
     public void add(Box entity) throws SQLException {
 
+    }
+
+    @Override
+    public void updateBoxSetCurrentLoad(int currentLoad, Long id) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                queryUpdateBoxSetCurrentLoad)) {
+
+                ps.setInt(1, currentLoad);
+                ps.setLong(2, id);
+                ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Optional<Box> findById(Long id) {
+        try (PreparedStatement ps = connection.prepareStatement
+                (queryFindById)) {
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Optional.of(extractFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -47,6 +79,7 @@ public class JDBCBoxDao implements BoxDao {
         }
         return resultList;
     }
+
     @Override
     public Optional<Box> findByProduct(Long id) {
         try (PreparedStatement ps = connection.prepareStatement
@@ -63,16 +96,32 @@ public class JDBCBoxDao implements BoxDao {
     }
 
     @Override
-    public void updateSetCurrentLoad(Integer currentLoad,Long id) {
+    public List<BoxWithProductNameDTO> findBoxDTOByCurrentLoad(Integer currentLoad) {
+        List<BoxWithProductNameDTO> resultList = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement
+                (queryFindByCurrentLoad)) {
+            ps.setInt(1, currentLoad);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                BoxWithProductNameDTO result = extractFromResultSetToBoxWithProductNameDTO(rs);
+                resultList.add(result);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultList;
+    }
+
+    @Override
+    public void updateSetCurrentLoad(Integer currentLoad, Long id) {
         try (PreparedStatement ps = connection.prepareStatement(
                 updateSetCurrentLoad)) {
 
-                ps.setInt(1, currentLoad);
-                ps.setLong(2, id);
+            ps.setInt(1, currentLoad);
+            ps.setLong(2, id);
 
-                ps.executeUpdate();
-        }
-        catch (SQLException e) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -105,5 +154,11 @@ public class JDBCBoxDao implements BoxDao {
                 rs.getLong("product_id"));
     }
 
+    private BoxWithProductNameDTO extractFromResultSetToBoxWithProductNameDTO(ResultSet rs)
+            throws SQLException {
+        return new BoxWithProductNameDTO(rs.getLong("id"),
+                rs.getString("name"),
+                rs.getInt("total_capasity"));
+    }
 
 }

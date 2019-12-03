@@ -18,7 +18,7 @@ public class ConnectionPoolHolder {
                     ds.setUrl("jdbc:mysql://localhost:3306/machine?useTimezone=true&serverTimezone= Europe/Kiev");
                     ds.setUsername("root");
                     ds.setPassword("11111");
-                    ds.setMinIdle(5);
+                    ds.setMinIdle(5);//минимальное количество простаивающих соединений, которые будут оставаться в пуле
                     ds.setMaxIdle(10);
                     ds.setMaxOpenPreparedStatements(100);
                     dataSource = ds;

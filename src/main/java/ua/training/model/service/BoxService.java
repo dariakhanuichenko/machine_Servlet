@@ -2,6 +2,7 @@ package ua.training.model.service;
 
 import ua.training.model.dao.BoxDao;
 import ua.training.model.dao.DaoFactory;
+import ua.training.model.dto.BoxWithProductNameDTO;
 import ua.training.model.entity.Box;
 
 import java.util.List;
@@ -22,6 +23,16 @@ public class BoxService {
     public Optional<Box> findByProduct(Long id){return boxDao.findByProduct(id);}
 
     public void updateCurrentLoadById(Integer currentLoad, Long id){
+        boxDao.updateSetCurrentLoad(currentLoad, id);
+    }
+
+    public List<BoxWithProductNameDTO> findBoxByCurrentLoad(Integer currentLoad){
+        return boxDao.findBoxDTOByCurrentLoad(currentLoad);
+    }
+
+    public Optional<Box> findById(Long id){return boxDao.findById(id);}
+
+    public void updateBoxSetCurrentLoad(int currentLoad, Long id){
         boxDao.updateSetCurrentLoad(currentLoad, id);
     }
 }

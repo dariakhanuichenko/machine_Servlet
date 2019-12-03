@@ -15,10 +15,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link href="${pageContext.request.contextPath}/static/style.css" rel="stylesheet">
+    <%--    <link href="${pageContext.request.contextPath}/static/style.css" rel="stylesheet">--%>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="static/styles2.min.css">
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
 <div>
@@ -33,7 +34,7 @@
 
                 <span class="navbar-text actions"> <a href="${pageContext.request.contextPath}/app/login" class="login">
                     <fmt:message
-                        key="message.login"/></a>
+                            key="message.login"/></a>
                     <a class="btn btn-light action-button" role="button"
                        href="${pageContext.request.contextPath}/app/registration"
                        style="background-color: #FF3C40;"> <fmt:message key="message.registration"/></a></a>
@@ -56,13 +57,13 @@
     <div class="col">
         <div class="table-responsive">
             <table class="table table-borderless">
-<thead>
+                <thead>
                 <tr>
                     <th> product name</th>
                     <th> price</th>
 
                 </tr>
-</thead>
+                </thead>
                 <tbody>
                 <c:forEach items="${products}" var="product">
                     <tr>
@@ -76,8 +77,31 @@
                             </a>
                         </td>
                         <td>
-                            <button th:style="${product.currentLoad == 0 ? 'background-color: red;' : 'background-color: green;'}"
-                                    class="button button5"></button>
+                            <c:if test="${product.currentLoad == 0}">
+                                <button style="background-color: red;padding: 20px;
+                                                                text-align: center;
+                                                                text-decoration: none;
+                                                                display: inline-block;
+                                                                font-size: 16px;
+                                                                margin: 4px 2px;
+                                                                border-radius: 50%;
+                                                                border: none;"
+                                ></button>
+                            </c:if>
+                            <c:if test="${product.currentLoad != 0}">
+                                <button style="background-color: green;
+                                                padding: 20px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        display: inline-block;
+                                        font-size: 16px;
+                                        margin: 4px 2px;
+                                        border-radius: 50%;
+                                        border: none;"
+                                        class="button5"></button>
+                            </c:if>
+                                <%--                            <button style="${product.currentLoad} == 0 ? background-color: red;' : 'background-color: green;"--%>
+                                <%--                                    class="button button5"></button>--%>
                         </td>
                     </tr>
                 </c:forEach>
@@ -87,16 +111,18 @@
     </div>
 
 </div>
-<div th:style="${error == false ? 'visibility:hidden;' : 'visibility:visible;'}" class="alert alert-danger"
-     role="alert">
-    Put enought money
-</div>
+<c:if test="${error == false}">
+    <div style=" visibility:hidden;" class="alert alert-danger"
+         role="alert">
+        Put enought money
+    </div>
+</c:if>
 
 <div style="margin-left: 35%">
     <form th:action="@{/local/pay}"
           method="post">
         <span>Put</span>
-<%--        <span><c:out value="${payment}"/></span>--%>
+        <span><c:out value="${payment}"/></span>
         <span>money</span>
         <input name="money" pattern="[0-9]+">
         <button id="buttonPay" type="submit">

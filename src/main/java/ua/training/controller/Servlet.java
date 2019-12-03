@@ -23,6 +23,7 @@ public class Servlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(Login.class);
 
     public void init(ServletConfig servletConfig) {
+
         UserService userService = new UserService();
         RequestService requestService=new RequestService();
         CommentService commentService=new CommentService();
@@ -30,11 +31,11 @@ public class Servlet extends HttpServlet {
         ProductOrderService productOrderService=new ProductOrderService();
         BoxService boxService= new BoxService();
         OrderService orderService= new OrderService();
-        RevenueService revenueService= new RevenueService();
+        //RevenueService revenueService= new RevenueService();
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
-        commands.put("", new ShowBoxes(productService, revenueService));
+        commands.put("", new ShowBoxes(productService/*, revenueService*/));
         commands.put("local/buy-product", new BuyProduct(productService,boxService, productOrderService, orderService));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(userService));
@@ -57,6 +58,8 @@ public class Servlet extends HttpServlet {
         commands.put("manager/new_requests/accept/done", new MakeRequestAcceptedDone(requestService,userService));
         commands.put("manager/new_requests/reject", new MakeRejectedRequest());
         commands.put("manager/new_requests/reject/done", new MakeRequestRejectedDone(requestService));
+        commands.put("manager/empty-boxes", new ManagerEmptyBoxes(boxService));
+        commands.put("manager/add-product", new AddProductToBox(boxService));
 
         commands.put("manager/all-comments", new ManagerAllComments(commentService));
     }

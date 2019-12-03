@@ -3,10 +3,12 @@ package ua.training.controller.filters;
 import ua.training.model.entity.Role;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebFilter(filterName = "AccessFilter", urlPatterns = {"/*"})
 public class AccessFilter  implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -27,7 +29,7 @@ public class AccessFilter  implements Filter {
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
         }else if (path.contains("manager")) {
-            if (request.getSession().getAttribute("role").equals(Role.ROLE_MANAGER)){
+            if (request.getSession().getAttribute("role").equals(Role.ROLE_MASTER)){
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
                 request.setAttribute("error", true);

@@ -51,7 +51,7 @@
             <div class="form-group">
                 <div class="input-group">
 <%--                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>--%>
-                    <input type="password"  name="pass" placeholder=<fmt:message key="message.password"/>><br/>
+                    <input type="password"  name="pass" placeholder=<fmt:message key="message.password"/><br/>
                 </div>
             </div>
             <div class="form-group ${status.error ? 'has-error' : ''}">
