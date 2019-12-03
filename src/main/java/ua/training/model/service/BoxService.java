@@ -35,4 +35,8 @@ public class BoxService {
     public void updateBoxSetCurrentLoad(int currentLoad, Long id){
         boxDao.updateSetCurrentLoad(currentLoad, id);
     }
+
+    public Optional<Integer> findCurrentLoadByProductId(Long productId) {
+        return boxDao.findCurrentLoadByProductId(productId);
+    }
 }

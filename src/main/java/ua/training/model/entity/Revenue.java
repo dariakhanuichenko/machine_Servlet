@@ -18,6 +18,11 @@ public class Revenue {
         this.dateTime = dateTime;
     }
 
+    public Revenue(Long payment, LocalDateTime dateTime) {
+        this.payment = payment;
+        this.dateTime = dateTime;
+    }
+
     public Long getId() {
         return id;
     }

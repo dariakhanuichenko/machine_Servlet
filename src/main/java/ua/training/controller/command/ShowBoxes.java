@@ -1,18 +1,19 @@
 package ua.training.controller.command;
 
+import ua.training.model.service.ProductOrderService;
 import ua.training.model.service.ProductService;
-import ua.training.model.service.RevenueService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class ShowBoxes implements Command {
 
     private ProductService productService;
-    private RevenueService revenueService;
 
-    public ShowBoxes(ProductService productService, RevenueService revenueService) {
+    private ProductOrderService productOrderService;
+
+    public ShowBoxes(ProductService productService, ProductOrderService productOrderService) {
         this.productService = productService;
-        this.revenueService = revenueService;
+        this.productOrderService = productOrderService;
     }
 
     @Override
@@ -24,8 +25,8 @@ public class ShowBoxes implements Command {
         } catch ( java.lang.Exception e) {
             e.printStackTrace();
         }
-
-        request.setAttribute("payment", revenueService.findRevenueByOrderId(orderId).orElse(0L));
+        request.setAttribute("error", false);
+        request.setAttribute("payment", productOrderService.findRevenueByOrderId(orderId).orElse(0L));
         return "/index.jsp";
     }
 }

@@ -112,32 +112,34 @@
 
 </div>
 <c:if test="${error == false}">
-    <div style=" visibility:hidden;" class="alert alert-danger"
+    <div class="alert alert-danger"
          role="alert">
         Put enought money
     </div>
 </c:if>
 
+
 <div style="margin-left: 35%">
-    <form th:action="@{/local/pay}"
+    <form action="/app/local/pay"
           method="post">
         <span>Put</span>
         <span><c:out value="${payment}"/></span>
         <span>money</span>
-        <input name="money" pattern="[0-9]+">
+        <input name="money1" pattern="[0-9]+">
         <button id="buttonPay" type="submit">
             <span>Pay</span></button>
-        <a id="buttonCansel" href="/local/cancel" onclick="makeCanceled()" type="submit">
-            <span>Cancel</span>
-        </a>
     </form>
+    <a id="buttonCansel" href="/app/local/cancel" onclick="makeCanceled()" type="submit">
+        <span>Cancel</span>
+    </a>
 </div>
-<div id="cancel" style="display:none;" class="alert alert-primary" role="alert">
-    Returned
-    <%--    <span th:text="${return}"></span> --%>
-    money
-</div>
-
+<%--<c:if test="${return!=null}">--%>
+<%--    <div id="cancel" class="alert alert-primary" role="alert">--%>
+<%--        Returned--%>
+<%--        <span><c:out value="${return}"/></span>--%>
+<%--        money--%>
+<%--    </div>--%>
+<%--</c:if>--%>
 <script>
     function makeCanceled() {
         document.getElementById("cancel").style.display = "block";

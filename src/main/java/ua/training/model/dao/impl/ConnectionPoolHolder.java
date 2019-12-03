@@ -19,7 +19,7 @@ public class ConnectionPoolHolder {
                     ds.setUsername("root");
                     ds.setPassword("11111");
                     ds.setMinIdle(5);//минимальное количество простаивающих соединений, которые будут оставаться в пуле
-                    ds.setMaxIdle(10);
+                    ds.setMaxIdle(15);
                     ds.setMaxOpenPreparedStatements(100);
                     dataSource = ds;
                 }

@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface RevenueDao extends GenericDao<Revenue> {
 
-    Optional<Long>findRevenueByOrderId(String orderId);
+   // Optional<Long>findRevenueByOrderId(String orderId);
 }

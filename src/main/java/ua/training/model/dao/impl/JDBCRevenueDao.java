@@ -13,14 +13,14 @@ import java.util.Optional;
 public class JDBCRevenueDao implements RevenueDao {
 
 
-    private String queryFindByOrderId="SELECT sum(number_ *price) as summ FROM Product_Order  join Product  on Product_Order.product_id=Product.id WHERE Product_Order.order_id = ?";
+  //  private String queryFindByOrderId="SELECT sum(number_ *price) as summ FROM Product_Order  join Product  on Product_Order.product_id=Product.id WHERE Product_Order.order_id = ?";
     private Connection connection;
 
-    public JDBCRevenueDao(Connection connection) {
+   public JDBCRevenueDao(Connection connection) {
         this.connection = connection;
     }
 
-    @Override
+    /*@Override
     public Optional<Long> findRevenueByOrderId(String orderId) {
         try (PreparedStatement ps = connection.prepareStatement
                 (queryFindByOrderId)) {
@@ -31,10 +31,10 @@ public class JDBCRevenueDao implements RevenueDao {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
+
 
         return Optional.empty();
-    }
+    }}*/
 
     @Override
     public void add(Revenue entity) throws SQLException {

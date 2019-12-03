@@ -31,12 +31,14 @@ public class Servlet extends HttpServlet {
         ProductOrderService productOrderService=new ProductOrderService();
         BoxService boxService= new BoxService();
         OrderService orderService= new OrderService();
-        //RevenueService revenueService= new RevenueService();
+       // RevenueService revenueService= new RevenueService();
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
-        commands.put("", new ShowBoxes(productService/*, revenueService*/));
+        commands.put("", new ShowBoxes(productService,productOrderService));
         commands.put("local/buy-product", new BuyProduct(productService,boxService, productOrderService, orderService));
+        commands.put("local/pay", new PayOrder(orderService,productOrderService,boxService));
+        commands.put("local/cancel", new CancelPayment(orderService,boxService));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(userService));
         commands.put("registration", new Registration(userService));
