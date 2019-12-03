@@ -27,10 +27,8 @@ public class Login implements Command {
         if (email == null) return "/login.jsp";
         logger.info("user enter email: " + email + " " + password);
 
-//        logger.info("entering DB : ");
-//        userService.findAllUsers().isPresent().get().forEach(logger::info);
 
-        if (nonNull(request.getSession().getAttribute("userEmail"))) return "/welcome.jsp";
+//        if (nonNull(request.getSession().getAttribute("userEmail"))) return "/welcome.jsp";
         Optional<User> user = userService.findUser(email, password);
         if (!user.isPresent()) {
             logger.info("Invalid attempt of user email: '" + email + "'");
@@ -46,17 +44,11 @@ public class Login implements Command {
 
         request.getSession(true).setAttribute("userName", email);
 
-        if (user.get().getRole().equals(Role.ROLE_MASTER)) {
-            CommandUtility.setUserRole(request, Role.ROLE_MASTER, email);
-            return "redirect:/app/manager/empty-boxes";
-        } else if (user.get().getRole().equals(Role.ROLE_USER)) {
+//        if (user.get().getRole().equals(Role.ROLE_USER)) {
             CommandUtility.setUserRole(request, Role.ROLE_USER, email);
-            return "redirect:/app/user/create_request";
-        } else if (user.get().getRole().equals(Role.ROLE_MANAGER)) {
-            CommandUtility.setUserRole(request, Role.ROLE_MANAGER, email);
-            return "redirect:/app/manager/empty-boxes";
-        }else {
-            return "redirect:/index.jsp";
-        }
+            return "redirect:/app/user/empty-boxes";
+//        }else {
+//            return "redirect:/app/";
+//        }
     }
 }

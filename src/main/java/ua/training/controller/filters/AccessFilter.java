@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter(filterName = "AccessFilter", urlPatterns = {"/*"})
-public class AccessFilter  implements Filter {
+public class AccessFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -20,16 +20,8 @@ public class AccessFilter  implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String path = request.getRequestURI();
-        if (path.contains("master")) {
-            if (request.getSession().getAttribute("role").equals(Role.ROLE_MASTER)) {
-                filterChain.doFilter(servletRequest, servletResponse);
-            } else {
-                request.setAttribute("error", true);
-                request.setAttribute("message", "AccessDenied");
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
-            }
-        }else if (path.contains("manager")) {
-            if (request.getSession().getAttribute("role").equals(Role.ROLE_MASTER)){
+        if (path.contains("manager")) {
+            if (request.getSession().getAttribute("role").equals(Role.ROLE_USER)) {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
                 request.setAttribute("error", true);

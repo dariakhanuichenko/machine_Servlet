@@ -18,8 +18,8 @@
     <%--    <link href="${pageContext.request.contextPath}/static/style.css" rel="stylesheet">--%>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="static/styles2.min.css">
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}static/styles2.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}static/style.css">
 </head>
 <body>
 <div>
@@ -40,10 +40,9 @@
                        style="background-color: #FF3C40;"> <fmt:message key="message.registration"/></a></a>
                 </span>
                 <a class="btn" id="locales"
-                   href="?sessionLocale=en"><img src="static/United-Kingdom-flag-icon.png" height="30px"/></a>
+                   href="?sessionLocale=en"><img src="${pageContext.request.contextPath}/static/United-Kingdom-flag-icon.png" height="30px"/></a>
                 <a class="btn"
-                   href="?sessionLocale=ua"><img src="static/Ukraine-Flag-icon.png" height="30px"/> </a>
-
+                   href="?sessionLocale=ua"><img src="${pageContext.request.contextPath}/static/Ukraine-Flag-icon.png" height="30px"/> </a>
 
             </div>
         </div>
@@ -59,8 +58,8 @@
             <table class="table table-borderless">
                 <thead>
                 <tr>
-                    <th> product name</th>
-                    <th> price</th>
+                    <th> <fmt:message key="message.productname"/></th>
+                    <th> <fmt:message key="message.price"/></th>
 
                 </tr>
                 </thead>
@@ -72,8 +71,19 @@
                         <td style="width: 30px; valign:middle;"><c:out value="${product.price}"/></td>
                         <td style="width: 30px;">
                             <a id="buttonBuy" href="/app/local/buy-product?id=${product.id}" type="submit"
-                               style="${product.currentLoad == 0 ? 'pointer-events: none;' : 'pointer-events: auto;'}">
-                                Buy
+                               style="border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #4CAF50;">
+                                <fmt:message key="message.buy"/>
                             </a>
                         </td>
                         <td>
@@ -114,7 +124,7 @@
 <c:if test="${param.error == true}">
     <div class="alert alert-danger"
          role="alert">
-        Put enought money
+        <fmt:message key="message.putEnoudht"/>
     </div>
 </c:if>
 
@@ -122,22 +132,46 @@
 <div style="margin-left: 35%">
     <form action="/app/local/pay"
           method="post">
-        <span>Put</span>
+        <span><fmt:message key="message.put"/></span>
         <span><c:out value="${payment}"/></span>
-        <span>money</span>
-        <input name="money1" pattern="[0-9]+">
-        <button id="buttonPay" type="submit">
-            <span>Pay</span></button>
+        <span><fmt:message key="message.money"/></span>
+        <input name="money1" required="required" pattern="[0-9]+">
+        <button style=" border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #4CAF50;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2), 0 4px 10px 0 rgba(0,0,0,0.19);"
+                id="buttonPay" type="submit">
+            <span><fmt:message key="message.pay"/></span></button>
     </form>
-    <a id="buttonCansel" href="/app/local/cancel" onclick="makeCanceled()" type="submit">
-        <span>Cancel</span>
+    <a  style=" background-color: white;
+    border: 2px solid #008CBA;
+    color: #008CBA;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;" id="buttonCansel" href="/app/local/cancel" onclick="makeCanceled()" type="submit">
+        <span><fmt:message key="message.cancel"/></span>
     </a>
 </div>
 <c:if test="${not empty param.return_}">
     <div id="cancel" class="alert alert-primary" role="alert">
-        Returned
+            <fmt:message key="message.returned"/></span>
         <span><c:out value="${param.return_}"/></span>
-        money
+            <fmt:message key="message.money"/>
     </div>
 </c:if>
 

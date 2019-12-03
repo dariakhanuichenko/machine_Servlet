@@ -15,15 +15,15 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCUserDao(getConnection());
     }
 
-    @Override
-    public RequestDao createRequestDao() {
-        return new JDBCRequestDao(getConnection());
-    }
-
-    @Override
-    public CommentDao createCommentDao() {
-        return new JDBCCommentDao(getConnection(), createUserDao());
-    }
+//    @Override
+//    public RequestDao createRequestDao() {
+//        return new JDBCRequestDao(getConnection());
+//    }
+//
+//    @Override
+//    public CommentDao createCommentDao() {
+//        return new JDBCCommentDao(getConnection(), createUserDao());
+//    }
 
     @Override
     public BoxDao createBoxDao() {
@@ -45,10 +45,7 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCProductOrderDao(getConnection());
     }
 
-    @Override
-    public RevenueDao createRevenueDao() {
-        return new JDBCRevenueDao(getConnection());
-    }
+
 
     private Connection getConnection(){
         try {

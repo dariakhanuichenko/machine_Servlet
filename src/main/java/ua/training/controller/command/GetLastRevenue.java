@@ -21,8 +21,8 @@ public class GetLastRevenue implements Command {
                 Revenue revenue = productService.findLastRecord().get();
 
                 productService.deleteRevenueById(revenue.getId());
-                returnStr = "redirect:/app/manager/empty-boxes?returnMoney=" + revenue.getPayment();
-            } else returnStr = "redirect:/app/manager/empty-boxes";
+                returnStr = "redirect:/app/user/empty-boxes?returnMoney=" + revenue.getPayment();
+            } else returnStr = "redirect:/app/user/empty-boxes";
             return returnStr;
 
     }

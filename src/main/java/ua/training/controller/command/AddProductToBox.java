@@ -30,6 +30,6 @@ public class AddProductToBox implements Command {
                 log.info("current load for box " + id + " wasn't updated\n number is too big");
             }
         });
-        return "redirect:/app/manager/empty-boxes";
+        return "redirect:/app/user/empty-boxes";
     }
 }

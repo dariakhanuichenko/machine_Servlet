@@ -54,7 +54,7 @@
     <button class="button" type="submit" class="btn btn-primary login-btn btn-block"> <fmt:message key="message.login"/>
     </button>
     </div>
-    <p class="message"><a href="${pageContext.request.contextPath}/app/logout"> <fmt:message key="message.create.account"/></a>
+    <p class="message"><a href="${pageContext.request.contextPath}/app/registration"> <fmt:message key="message.create.account"/></a>
     </p>
     </div>
 </form>

@@ -2,10 +2,8 @@ package ua.training.controller;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import ua.training.controller.command.*;
 import ua.training.controller.command.Exception;
-import ua.training.model.entity.ProductOrder;
-import ua.training.model.entity.Revenue;
+import ua.training.controller.command.*;
 import ua.training.model.service.*;
 
 import javax.servlet.ServletConfig;
@@ -25,46 +23,27 @@ public class Servlet extends HttpServlet {
     public void init(ServletConfig servletConfig) {
 
         UserService userService = new UserService();
-        RequestService requestService=new RequestService();
-        CommentService commentService=new CommentService();
-        ProductService productService=new ProductService();
-        ProductOrderService productOrderService=new ProductOrderService();
-        BoxService boxService= new BoxService();
-        OrderService orderService= new OrderService();
-       // RevenueService revenueService= new RevenueService();
+        ProductService productService = new ProductService();
+        ProductOrderService productOrderService = new ProductOrderService();
+        BoxService boxService = new BoxService();
+        OrderService orderService = new OrderService();
+
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
-        commands.put("", new ShowBoxes(productService,productOrderService));
-        commands.put("local/buy-product", new BuyProduct(productService,boxService, productOrderService, orderService));
-        commands.put("local/pay", new PayOrder(orderService,productOrderService,boxService));
-        commands.put("local/cancel", new CancelPayment(orderService,boxService));
+        commands.put("", new ShowBoxes(productService, productOrderService));
+        commands.put("local/buy-product", new BuyProduct(productService, boxService, productOrderService, orderService));
+        commands.put("local/pay", new PayOrder(orderService, productOrderService, boxService));
+        commands.put("local/cancel", new CancelPayment(orderService, boxService));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(userService));
         commands.put("registration", new Registration(userService));
         commands.put("exception", new Exception());
 
-        commands.put("user/create_request", new CreateRequest(requestService));
-        commands.put("user/all_requests", new UserAllRequest(requestService));
-        commands.put("user/create_comment", new CreateComment(commentService,userService));
+        commands.put("user/empty-boxes", new ManagerEmptyBoxes(boxService));
+        commands.put("user/add-product", new AddProductToBox(boxService));
+        commands.put("user/get-revenue", new GetLastRevenue(productService));
 
-        commands.put("master/accepted_requests", new AcceptedRequests(requestService));
-        commands.put("master/accepted_requests/make", new MakeInProgress(requestService));
-        commands.put("master/in_progress_requests", new InProgressRequests(requestService));
-        commands.put("master/in_progress_requests/done", new MakeCompleted(requestService));
-        commands.put("master/in_progress_requests/beyond_repair", new MakeBeyondRepair(requestService));
-        commands.put("master/completed_requests", new CompletedRequests(requestService));
-
-        commands.put("manager/new_requests", new NewRequests(requestService));
-        commands.put("manager/new_requests/accept", new MakeAcceptedRequest(userService));
-        commands.put("manager/new_requests/accept/done", new MakeRequestAcceptedDone(requestService,userService));
-        commands.put("manager/new_requests/reject", new MakeRejectedRequest());
-        commands.put("manager/new_requests/reject/done", new MakeRequestRejectedDone(requestService));
-        commands.put("manager/empty-boxes", new ManagerEmptyBoxes(boxService));
-        commands.put("manager/add-product", new AddProductToBox(boxService));
-        commands.put("manager/get-revenue", new GetLastRevenue(productService));
-
-        commands.put("manager/all-comments", new ManagerAllComments(commentService));
     }
 
     public void doGet(HttpServletRequest request,

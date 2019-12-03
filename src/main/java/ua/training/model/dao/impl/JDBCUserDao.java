@@ -31,18 +31,10 @@ public class JDBCUserDao implements UserDao {
     @Override
     public void add(User entity) throws SQLException {
         try (PreparedStatement ps = connection.prepareStatement(queryAdd)) {
-            try (PreparedStatement ps1 = connection.prepareStatement(queryAddRole)) {
-                connection.setAutoCommit(false);
                 ps.setString(1, entity.getEmail());
                 ps.setString(2, entity.getPassword());
                 ps.setBoolean(3, entity.isActive());
                 ps.executeUpdate();
-
-                ps1.setLong(1, findByEmail(entity.getEmail()).getId());
-                ps1.setLong(2, Arrays.asList(Role.values()).indexOf(entity.getRole()) + 1);
-                ps1.executeUpdate();
-                connection.commit();
-            }
         }
         catch (SQLException e) {
             throw new RuntimeException("Invalid input");
@@ -131,7 +123,7 @@ public class JDBCUserDao implements UserDao {
                 .id(rs.getLong("id"))
                 .email(rs.getString("email"))
                 .password(rs.getString("password"))
-                .role(Role.values()[rs.getInt("role_id") - 1])
+//                .role(Role.values()[rs.getInt("role_id") - 1])
                 .active(rs.getBoolean("active"))
                 .build();
     }

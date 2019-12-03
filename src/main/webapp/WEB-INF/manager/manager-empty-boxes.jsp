@@ -16,11 +16,11 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <title>Manager</title>
+    <title>User</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
     <link rel="stylesheet" href="/assets/css/styles4.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/style.css">
 </head>
 
 <body>
@@ -64,8 +64,8 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Product name</th>
-                    <th> Total capasity</th>
+                    <th><fmt:message key="message.productname"/></th>
+                    <th> <fmt:message key="message.total.capasity"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,14 +77,14 @@
                         <td><c:out value="${box.totalCapasity}"/></td>
 
                         <td>
-                            <form  action="/app/manager/add-product"
+                            <form  action="/app/user/add-product"
                                   method="post">
                                 <input
                                         name="quantity"
                                         pattern="[0-9]+">
                                 <input value="${box.id}" name="id" type="hidden"/>
 
-                                <button type="submit" id="buttonCansel"><span>Add</span></button>
+                                <button type="submit" id="buttonCansel"><span> <fmt:message key="message.buy"/></span></button>
                             </form>
 
                         </td>
@@ -98,15 +98,26 @@
         </div>
     </div>
     <div>
-        <a id="buttonBuy" href="/app/manager/get-revenue" onclick="getRevenue()" type="submit">
-            <span>Get revenue</span></a>
+        <a id="buttonBuy" style="border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #4CAF50;" href="/app/user/get-revenue" onclick="getRevenue()" type="submit">
+            <span><fmt:message key="message.get.revenue"/></span></a>
     </div>
 </div>
 
 <div id="return" style="display:none;" class="alert alert-primary" role="alert">
-    <span >Returnes</span>
+    <span > <fmt:message key="message.returned"/></span>
     <c:out value="${param.returnMoney}"></c:out>
-    <span>Money</span>
+    <span> <fmt:message key="message.money"/></span>
 </div>
 <script>
     function getRevenue() {

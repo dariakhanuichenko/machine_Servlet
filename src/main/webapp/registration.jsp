@@ -23,13 +23,11 @@
    href="?sessionLocale=en"><img src="${pageContext.request.contextPath}/static/United-Kingdom-flag-icon.png" height="30px"/></a>
 <a class="btn"
    href="?sessionLocale=ua"><img src="${pageContext.request.contextPath}/static/Ukraine-Flag-icon.png" height="30px"/> </a>
-<%--        <h2>--%>
-<%--            This is registration form! <br/>--%>
-<%--        </h2>--%>
+
 <div class="login-form" align="center">
 
 
-    <c:if test="${requestScope.error eq true}">
+    <c:if test="${param.error == true}">
         <div class="alert alert-danger" align="center">
             <strong>User with this email already exists</strong>
         </div>
@@ -51,37 +49,17 @@
             <div class="form-group">
                 <div class="input-group">
 <%--                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>--%>
-                    <input type="password"  name="pass" placeholder=<fmt:message key="message.password"/><br/>
+                    <input type="password"  name="pass" placeholder=<fmt:message key="message.password"/>><br/>
                 </div>
             </div>
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label>
-                    <fmt:message key="message.select.role"/>
-                </label>
-                <select name="role" path="roles" class="selectpicker">
-                    <option value="ROLE_USER">
-                        ROLE_USER
-                    </option >
-                    <option  value="ROLE_MASTER">
-                        ROLE_MASTER
-                    </option >
-                    <option  value="ROLE_MANAGER">
-                        ROLE_MANAGER
-                    </option >
-                </select>
-            </div><br/>
 
-<%--            <span class="red" >--%>
-<%--                <c:if test="not empty inwalidInput">--%>
-<%--            <c:out value=" ${inwalidInput}"/>--%>
-<%--                </c:if>--%>
-<%--            </span>--%>
+
             <div class="form-group">
                 <button class="btn btn-primary login-btn btn-block" type="submit" value="Submit">
                     <fmt:message key="message.registration"/>
                 </button>
             </div>
-            <p class="message"><a href="${pageContext.request.contextPath}/index.jsp"> <fmt:message key="message.sign.in"/></a>
+            <p class="message"><a href="${pageContext.request.contextPath}/app/login"> <fmt:message key="message.sign.in"/></a>
             </p>
         </form>
 </div>
