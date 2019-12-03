@@ -18,4 +18,6 @@ public interface BoxDao extends GenericDao<Box> {
     void updateBoxSetCurrentLoad(int currentLoad,  Long id);
 
     Optional<Integer>  findCurrentLoadByProductId(Long productId);
+
+    Optional<Integer> findCurrentLoadById(Long id);
 }

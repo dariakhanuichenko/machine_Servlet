@@ -18,13 +18,14 @@ public class ShowBoxes implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String orderId = (String)request.getSession().getId();
+        String orderId = request.getSession().getId();
         try {
             request.setAttribute("products",productService.findAllWithCurrentLoad());
 
         } catch ( java.lang.Exception e) {
             e.printStackTrace();
         }
+        request.setAttribute("return_", "");
         request.setAttribute("error", false);
         request.setAttribute("payment", productOrderService.findRevenueByOrderId(orderId).orElse(0L));
         return "/index.jsp";

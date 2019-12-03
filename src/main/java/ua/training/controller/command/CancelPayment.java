@@ -17,10 +17,10 @@ public class CancelPayment implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String orderId = (String) request.getSession().getId();
+        String orderId = request.getSession().getId();
 
-        orderService.findBoxListByOrder(orderId).forEach(c -> boxService.updateBoxSetCurrentLoad(c.getNumber1(), c.getBoxId()));
-        return "redirect:/?return=" + orderService.getPaidById(orderId).orElse(0L);
+        orderService.findBoxListByOrder(orderId).forEach(c -> boxService.updateBoxSetCurrentLoad(boxService.findCurrentLoadById(c.getBoxId()).get()+c.getNumber1(), c.getBoxId()));
+        return "redirect:/app/?return_=" + orderService.getPaidById(orderId).orElse(0L);
     }
 }
 

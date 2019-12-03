@@ -18,6 +18,7 @@ public class ManagerEmptyBoxes implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         List<BoxWithProductNameDTO> boxes = boxService.findBoxByCurrentLoad(0);
+        request.setAttribute("returnMoney",null);
         request.setAttribute("boxes", boxes);
         request.setAttribute("boxDTO", new BoxDTO());
         return "/WEB-INF/manager/manager-empty-boxes.jsp";

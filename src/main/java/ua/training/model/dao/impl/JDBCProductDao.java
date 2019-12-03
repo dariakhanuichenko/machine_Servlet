@@ -61,7 +61,7 @@ public class JDBCProductDao implements ProductDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ProductDTO result = extractFromResultSetToProductDTO(rs);
-                System.out.println(result.toString());
+
                 resultList.add(result);
             }
         } catch (SQLException e) {

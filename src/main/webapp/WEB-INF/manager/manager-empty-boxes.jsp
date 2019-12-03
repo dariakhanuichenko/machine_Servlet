@@ -105,7 +105,7 @@
 
 <div id="return" style="display:none;" class="alert alert-primary" role="alert">
     <span >Returnes</span>
-<%--    <span th:text="${returnMoney}"></span>--%>
+    <c:out value="${param.returnMoney}"></c:out>
     <span>Money</span>
 </div>
 <script>

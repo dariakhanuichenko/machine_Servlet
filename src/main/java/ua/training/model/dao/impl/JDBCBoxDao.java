@@ -21,6 +21,7 @@ public class JDBCBoxDao implements BoxDao {
     private String queryFindByCurrentLoad = "SELECT Product.name, Box.id, Box.total_capasity  FROM Box  inner join Product  on Product.id= Box.product_id WHERE Box.current_load=? ";
     private String queryUpdateBoxSetCurrentLoad = "update Box  set current_load =? where  id=?";
     private String queryFindCurrentLoadByProductId="SELECT current_load FROM Box  WHERE product_id = ?";
+    private String queryFindCurrentLoadByBoxtId="SELECT current_load FROM Box  WHERE id = ?";
 
     private Connection connection;
 
@@ -52,6 +53,21 @@ public class JDBCBoxDao implements BoxDao {
         try (PreparedStatement ps = connection.prepareStatement
                 (queryFindCurrentLoadByProductId)) {
             ps.setLong(1, productId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Optional.of(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Integer> findCurrentLoadById(Long id) {
+        try (PreparedStatement ps = connection.prepareStatement
+                (queryFindCurrentLoadByBoxtId)) {
+            ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return Optional.of(rs.getInt(1));

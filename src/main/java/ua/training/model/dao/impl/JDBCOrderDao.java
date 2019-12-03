@@ -53,7 +53,7 @@ public class JDBCOrderDao implements ua.training.model.dao.OrderDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 OrderDTO result = extractFromResultSetToOrderDTO(rs);
-                System.out.println(result.toString());
+
                 resultList.add(result);
             }
             return resultList;

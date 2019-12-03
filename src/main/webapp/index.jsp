@@ -111,7 +111,7 @@
     </div>
 
 </div>
-<c:if test="${error == false}">
+<c:if test="${param.error == true}">
     <div class="alert alert-danger"
          role="alert">
         Put enought money
@@ -133,13 +133,22 @@
         <span>Cancel</span>
     </a>
 </div>
-<%--<c:if test="${return!=null}">--%>
-<%--    <div id="cancel" class="alert alert-primary" role="alert">--%>
-<%--        Returned--%>
-<%--        <span><c:out value="${return}"/></span>--%>
-<%--        money--%>
-<%--    </div>--%>
-<%--</c:if>--%>
+<c:if test="${not empty param.return_}">
+    <div id="cancel" class="alert alert-primary" role="alert">
+        Returned
+        <span><c:out value="${param.return_}"/></span>
+        money
+    </div>
+</c:if>
+
+<%--<script>--%>
+<%--    // return_ != 'null';--%>
+<%--    if (return_ != null) {--%>
+<%--        document.getElementById('cancel').style.display = 'block';--%>
+<%--    } else {--%>
+<%--        document.getElementById('cancel').style.display = 'none';--%>
+<%--    }--%>
+<%--</script>--%>
 <script>
     function makeCanceled() {
         document.getElementById("cancel").style.display = "block";

@@ -39,4 +39,8 @@ public class BoxService {
     public Optional<Integer> findCurrentLoadByProductId(Long productId) {
         return boxDao.findCurrentLoadByProductId(productId);
     }
+
+    public Optional<Integer> findCurrentLoadById(Long id){
+        return boxDao.findCurrentLoadById(id);
+    }
 }

@@ -34,7 +34,7 @@ public class PayOrder implements Command {
 
         final String[] result = new String[1];
 
-        String orderId = (String) request.getSession().getId();
+        String orderId =  request.getSession().getId();
         orderService.getById(orderId).ifPresent(order -> {
             if (money != null) {
 
@@ -45,7 +45,7 @@ public class PayOrder implements Command {
                             }
                             if (money >= p) {
                                 productOrderService.saveRevenue(new Revenue(p, LocalDateTime.now()));
-                                deletePaidProducts(orderId);
+                              //  deletePaidProducts(orderId);
                                 orderService.updateOrderSetPaid(0L, orderId);
                                 log.info(orderId);
                                 productOrderService.deleteByOrderId(orderId);
@@ -63,11 +63,9 @@ public class PayOrder implements Command {
 
     private void deletePaidProducts(String orderId) {
         productOrderService.findProductIdAndNumberByOrderId(orderId)
-                .forEach(in -> {
-                            boxService.updateBoxSetCurrentLoad(
-                                    (boxService.findCurrentLoadByProductId(in.getId() - in.getNumber()).orElse(0)),
-                                    in.getId());
-                        }
+                .forEach(in -> boxService.updateBoxSetCurrentLoad(
+                        (boxService.findCurrentLoadByProductId(in.getId()).orElse(0))-in.getNumber(),
+                        in.getId())
                 );
     }
 }

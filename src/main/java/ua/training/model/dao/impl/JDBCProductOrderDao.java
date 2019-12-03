@@ -57,7 +57,7 @@ public class JDBCProductOrderDao implements ProductOrderDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ProductWIthNumberDTO result = extractFromResultSetToProductWithNumberDTO(rs);
-                System.out.println(result.toString());
+
                 resultList.add(result);
             }
             return Optional.of(resultList);
