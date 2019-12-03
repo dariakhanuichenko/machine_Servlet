@@ -3,6 +3,7 @@ package ua.training.model.dao.impl;
 import ua.training.model.dao.ProductDao;
 import ua.training.model.dto.ProductDTO;
 import ua.training.model.entity.Product;
+import ua.training.model.entity.Revenue;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,10 +17,41 @@ public class JDBCProductDao implements ProductDao {
 
     private String queryFindAllWithCurrentLoad = "select p.id, p.name, p.price, b.current_load from product p inner join box b on p.id=b.product_id;";
     private String queryFindById = "select * from product where id=?";
+
+    private String queryFindLastRevenue = "SELECT *  FROM revenue  ORDER BY revenue.date_time DESC limit 1";
+
+    private String queryDeleteRevenueById="DELETE FROM revenue  WHERE id = ?";
     private Connection connection;
+
 
     public JDBCProductDao(Connection connection) {
         this.connection = connection;
+    }
+
+
+    @Override
+    public void deleteRevenueById(Long id) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                queryDeleteRevenueById)) {
+            ps.setLong(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Optional<Revenue> findLastRecord() {
+        try (PreparedStatement ps = connection.prepareStatement
+                (queryFindLastRevenue)) {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Optional.of(extractFromResultSetToRevenue(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -102,5 +134,12 @@ public class JDBCProductDao implements ProductDao {
                 rs.getString("name"),
                 rs.getLong("price")
         );
+    }
+
+    private Revenue extractFromResultSetToRevenue(ResultSet rs)
+            throws SQLException {
+        return new Revenue(rs.getLong("id"),
+                rs.getLong("payment"),
+                rs.getTimestamp("date_time").toLocalDateTime());
     }
 }

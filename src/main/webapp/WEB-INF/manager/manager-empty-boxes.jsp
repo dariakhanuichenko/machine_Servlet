@@ -98,7 +98,7 @@
         </div>
     </div>
     <div>
-        <a id="buttonBuy" href="/manager/get-revenue" onclick="getRevenue()" type="submit">
+        <a id="buttonBuy" href="/app/manager/get-revenue" onclick="getRevenue()" type="submit">
             <span>Get revenue</span></a>
     </div>
 </div>

@@ -62,6 +62,7 @@ public class Servlet extends HttpServlet {
         commands.put("manager/new_requests/reject/done", new MakeRequestRejectedDone(requestService));
         commands.put("manager/empty-boxes", new ManagerEmptyBoxes(boxService));
         commands.put("manager/add-product", new AddProductToBox(boxService));
+        commands.put("manager/get-revenue", new GetLastRevenue(productService));
 
         commands.put("manager/all-comments", new ManagerAllComments(commentService));
     }
