@@ -7,6 +7,7 @@ import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Base64;
 import java.util.Optional;
 
 import static java.util.Objects.nonNull;
@@ -29,7 +30,10 @@ public class Login implements Command {
 
 
 //        if (nonNull(request.getSession().getAttribute("userEmail"))) return "/welcome.jsp";
-        Optional<User> user = userService.findUser(email, password);
+
+
+        Optional<User> user = userService.findUser(email, Base64.getEncoder().encodeToString(password.getBytes()));
+        logger.info("after find");
         if (!user.isPresent()) {
             logger.info("Invalid attempt of user email: '" + email + "'");
             request.setAttribute("error", true);

@@ -28,7 +28,7 @@ public class UserService {
                 .email(user.getEmail())
                 .name(user.getName())
                 .password(user.getPassword())
-                .role(user.getRole())
+                //.role(user.getRole())
                 .active(true)
                 .build();
         userDao.add(newUser);

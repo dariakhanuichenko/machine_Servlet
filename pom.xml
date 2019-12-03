@@ -27,7 +27,14 @@
             <scope>provided</scope>
         </dependency>
 
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.tomcat/catalina &ndash;&gt;-->
+        <!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.3m</version>
+        </dependency>
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.tomcat/catalina &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>org.apache.tomcat</groupId>-->
 <!--            <artifactId>catalina</artifactId>-->

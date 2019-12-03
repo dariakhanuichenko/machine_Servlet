@@ -8,6 +8,7 @@ import ua.training.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.Base64;
 
 public class Registration implements Command {
 
@@ -16,6 +17,7 @@ public class Registration implements Command {
     public Registration(UserService userService) {
         this.userService = userService;
     }
+
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -40,7 +42,7 @@ public class Registration implements Command {
             userService.addUser(
                     UserDTO.builder().email(email)
                     .name(name)
-                    .password(password)
+                    .password(Base64.getEncoder().encodeToString(password.getBytes()))
                     .role(Role.ROLE_USER)
                     .build());
 

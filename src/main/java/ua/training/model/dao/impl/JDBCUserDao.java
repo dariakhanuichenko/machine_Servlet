@@ -13,7 +13,7 @@ import java.util.List;
 public class JDBCUserDao implements UserDao {
     private String queryAdd = "INSERT INTO user (email , password ,  active) VALUES (? ,? ,? )";
     private String queryAddRole = "INSERT INTO  user_role(user_id,role_id) values(?,?)";
-    private String queryFindByEmail = "SELECT id,email,password,active , role_id FROM user  inner join user_role on user.id=user_role.user_id WHERE email = ?";
+    private String queryFindByEmail = "SELECT id,email,password,active  FROM user  WHERE email = ?";
     private String queryFindAll = "SELECT * FROM user";
     private String queryFindById = "SELECT * FROM user where id=?";
     private String queryUpdateUser = "UPDATE user SET email = ? , password = ?,  active = ? WHERE id = ?";
